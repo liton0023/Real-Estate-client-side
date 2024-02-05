@@ -18,22 +18,20 @@ const SingIn = () => {
         e.preventDefault();
     try {
       setLoading(true);
-       await fetch('http://localhost:5000/auth/signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
-      .then((res)=> res.json())
-      .then(data => console.log(data))
-    //   const data = await res.json();
-    //   console.log(data);
-    //   if (data.success === false) {
-    //     setLoading(false);
-    //     setError(data.message);
-    //     return;
-    //   }
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
       setLoading(false);
       setError(null);
       navigate('/signIn');
