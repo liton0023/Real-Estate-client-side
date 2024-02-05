@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import About from "../Pages/About";
 import Home from "../Pages/Home";
 import Main from "../Pages/Main";
+import Profile from "../Pages/Profile";
 import SingIn from "../Pages/SingIn";
 import SingOut from "../Pages/SingOut";
 
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
                 element:<Home></Home>
             },
             {
-                path:'singIn',
+                path:'signIn',
                 element:<SingIn></SingIn>
             },
             {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
             {
                 path:'about',
                 element:<About></About>
+            },
+            {
+                path:'profile',
+                element:<Profile></Profile>
             }
         ]
     }
