@@ -3,6 +3,7 @@ import About from "../Pages/About";
 import Home from "../Pages/Home";
 import Main from "../Pages/Main";
 import Profile from "../Pages/Profile";
+import SignUp from "../Pages/SignUp";
 import SingIn from "../Pages/SingIn";
 import SingOut from "../Pages/SingOut";
 
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
             {
                 path:'singOut',
                 element:<SingOut></SingOut>,
+            },
+            {
+                path:'signUp',
+                element:<SignUp></SignUp>
             },
             {
                 path:'about',

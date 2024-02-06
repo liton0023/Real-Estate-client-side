@@ -43,7 +43,7 @@ const NavBar = () => {
               About
             </li>
           </Link>
-          <Link to='/signIn'>
+          <Link to='/signUp'>
             {/* { (
               <img
                 className='rounded-full h-7 w-7 object-cover'
