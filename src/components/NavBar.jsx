@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const { currentUser } = useSelector((state) => state.user);
     const handleSubmit =()=>{
 
     }
@@ -43,17 +45,17 @@ const NavBar = () => {
               About
             </li>
           </Link>
-          <Link to='/signUp'>
-            {/* { (
+          <Link to='/profile'>
+            { currentUser? (
               <img
                 className='rounded-full h-7 w-7 object-cover'
-                src=''
+                src={currentUser. avatar}
                 alt='profile'
               />
             ) : (
               <li className=' text-slate-700 hover:underline'> Sign in</li>
-            )} */}
-             <li className=' text-slate-700 hover:underline'> Sign in</li>
+            )}
+             {/* <li className=' text-slate-700 hover:underline'> Sign in</li> */}
           </Link>
         </ul>
       </div>

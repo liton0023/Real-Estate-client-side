@@ -6,6 +6,7 @@ import Profile from "../Pages/Profile";
 import SignUp from "../Pages/SignUp";
 import SingIn from "../Pages/SingIn";
 import SingOut from "../Pages/SingOut";
+import PrivetRoute from "../components/PrivetRoute";
 
 export const router = createBrowserRouter([
     {
@@ -34,7 +35,9 @@ export const router = createBrowserRouter([
             },
             {
                 path:'profile',
-                element:<Profile></Profile>
+                element:<PrivetRoute>
+                    <Profile></Profile>
+                </PrivetRoute>
             }
         ]
     }
