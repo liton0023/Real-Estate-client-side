@@ -1,20 +1,24 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@firebase/storage';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { app } from '../../firebase';
+import {
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+} from '../redax/user/User.Slice';
 
 const Profile = () => {
     const fileRef = useRef(null);
-    const { currentUser, loading,} = useSelector((state) => state.user);
     const [file, setFile] = useState(undefined);
     const [filePerc, setFilePerc] = useState(0);
     const [fileUploadError, setFileUploadError] = useState(false);
     const [formData, setFormData] = useState({});
-    // const dispatch = useDispatch();
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
-      };
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const dispatch = useDispatch();
+
+    const { currentUser, loading,error} = useSelector((state) => state.user);
 
       useEffect(() => {
         if (file) {
@@ -46,10 +50,35 @@ const Profile = () => {
         );
       };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-   
-  };
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+      };
+      
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          dispatch(updateUserStart());
+          const res = await fetch(`/api/user/update/${currentUser._id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+          const data = await res.json();
+          console.log(data)
+          if (data.success === false) {
+            dispatch(updateUserFailure(data.message));
+            return;
+          }
+    
+          dispatch(updateUserSuccess(data));
+          setUpdateSuccess(true);
+        } catch (error) {
+          dispatch(updateUserFailure(error.message));
+        }
+      };
+    
 
     return (
         <div className='p-3 max-w-lg mx-auto'>
@@ -131,11 +160,11 @@ const Profile = () => {
         </span>
       </div>
 
-      {/* <p className='text-red-700 mt-5'>{error ? error : ''}</p>
+      <p className='text-red-700 mt-5'>{error ? error : ''}</p>
       <p className='text-green-700 mt-5'>
         {updateSuccess ? 'User is updated successfully!' : ''}
       </p>
-      <button onClick={handleShowListings} className='text-green-700 w-full'>
+      {/* <button onClick={handleShowListings} className='text-green-700 w-full'>
         Show Listings
       </button>
       <p className='text-red-700 mt-5'>
