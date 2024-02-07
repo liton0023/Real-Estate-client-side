@@ -1,12 +1,15 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@firebase/storage';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { app } from '../../firebase';
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserStart,
-  updateUserSuccess,
+  updateUserSuccess
 } from '../redax/user/User.Slice';
 
 const Profile = () => {
@@ -18,6 +21,8 @@ const Profile = () => {
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     const { currentUser, loading,error} = useSelector((state) => state.user);
 
       useEffect(() => {
@@ -25,6 +30,8 @@ const Profile = () => {
           handleFileUpload(file);
         }
       }, [file]);
+
+      console.log(formData)
 
       const handleFileUpload = (file) => {
         const storage = getStorage(app);
@@ -76,6 +83,24 @@ const Profile = () => {
           setUpdateSuccess(true);
         } catch (error) {
           dispatch(updateUserFailure(error.message));
+        }
+      };
+
+      const handleDeleteUser = async () => {
+        try {
+          dispatch(deleteUserStart());
+          const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+          const data = await res.json();
+          if (data.success === false) {
+            dispatch(deleteUserFailure(data.message));
+            return;
+          }
+          dispatch(deleteUserSuccess(data));
+          navigate('/')
+        } catch (error) {
+          dispatch(deleteUserFailure(error.message));
         }
       };
     
@@ -148,7 +173,7 @@ const Profile = () => {
       </form>
       <div className='flex justify-between mt-5'>
         <span
-        //   onClick={handleDeleteUser}
+          onClick={handleDeleteUser}
           className='text-red-700 cursor-pointer'
         >
           Delete account
