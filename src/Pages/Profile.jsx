@@ -1,4 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@firebase/storage';
+import { data } from 'autoprefixer';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess
@@ -103,6 +105,22 @@ const Profile = () => {
           dispatch(deleteUserFailure(error.message));
         }
       };
+
+      const handleSignOut = async () => {
+        try {
+          dispatch(signOutUserStart());
+          const res = await fetch('/api/auth/signout');
+          const data = await res.json();
+          if (data.success === false) {
+            dispatch(deleteUserFailure(data.message));
+            return;
+          }
+          dispatch(deleteUserSuccess(data));
+          navigate('/signIn')
+        } catch (error) {
+          dispatch(deleteUserFailure(data.message));
+        }
+      };
     
 
     return (
@@ -179,7 +197,7 @@ const Profile = () => {
           Delete account
         </span>
         <span
-        //  onClick={handleSignOut} 
+         onClick={handleSignOut} 
          className='text-red-700 cursor-pointer'>
           Sign out
         </span>
