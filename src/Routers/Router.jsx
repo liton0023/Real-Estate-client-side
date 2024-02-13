@@ -7,6 +7,7 @@ import Profile from "../Pages/Profile";
 import SignUp from "../Pages/SignUp";
 import SingIn from "../Pages/SingIn";
 import SingOut from "../Pages/SingOut";
+import UpdateListing from "../Pages/UpdateListing";
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 path:'create-listing',
                 element:<CreateListing></CreateListing>
+            },
+            {
+                path:'update-listing/:id',
+                element: <UpdateListing></UpdateListing>
             }
         ]
     }
