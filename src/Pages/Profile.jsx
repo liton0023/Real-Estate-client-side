@@ -21,6 +21,8 @@ const Profile = () => {
     const [fileUploadError, setFileUploadError] = useState(false);
     const [formData, setFormData] = useState({});
     const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [showListingsError, setShowListingsError] = useState(false);
+    const [userListings, setUserListings] = useState([]);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -33,7 +35,7 @@ const Profile = () => {
         }
       }, [file]);
 
-      console.log(formData)
+      // console.log(formData)
 
       const handleFileUpload = (file) => {
         const storage = getStorage(app);
@@ -121,6 +123,41 @@ const Profile = () => {
           dispatch(deleteUserFailure(data.message));
         }
       };
+
+      const handleShowListings = async () => {
+        try {
+          setShowListingsError(false);
+          const res = await fetch(`/api/user/listings/${currentUser._id}`);
+          const data = await res.json();
+          if (data.success === false) {
+            setShowListingsError(true);
+            return;
+          }
+    
+          setUserListings(data);
+        } catch (error) {
+          setShowListingsError(true);
+        }
+      };
+    
+      const handleListingDelete = async (listingId) => {
+        try {
+          const res = await fetch(`/api/listing/delete/${listingId}`, {
+            method: 'DELETE',
+          });
+          const data = await res.json();
+          if (data.success === false) {
+            console.log(data.message);
+            return;
+          }
+    
+          setUserListings((prev) =>
+            prev.filter((listing) => listing._id !== listingId)
+          );
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
     
 
     return (
@@ -207,14 +244,14 @@ const Profile = () => {
       <p className='text-green-700 mt-5'>
         {updateSuccess ? 'User is updated successfully!' : ''}
       </p>
-      {/* <button onClick={handleShowListings} className='text-green-700 w-full'>
+      <button onClick={handleShowListings} className='text-green-700 w-full'>
         Show Listings
       </button>
       <p className='text-red-700 mt-5'>
         {showListingsError ? 'Error showing listings' : ''}
-      </p> */}
+      </p>
 
-      {/* {userListings && userListings.length > 0 && (
+      {userListings && userListings.length > 0 && (
         <div className='flex flex-col gap-4'>
           <h1 className='text-center mt-7 text-2xl font-semibold'>
             Your Listings
@@ -238,7 +275,7 @@ const Profile = () => {
                 <p>{listing.name}</p>
               </Link>
 
-              {/* <div className='flex flex-col item-center'>
+              <div className='flex flex-col item-center'>
                 <button
                   onClick={() => handleListingDelete(listing._id)}
                   className='text-red-700 uppercase'
@@ -248,12 +285,12 @@ const Profile = () => {
                 <Link to={`/update-listing/${listing._id}`}>
                   <button className='text-green-700 uppercase'>Edit</button>
                 </Link>
-              </div> */}
+              </div>
             </div>
-        //   ))}
-        // </div> */}
-    //   )}
-    // </div>
+          ))}
+        </div>
+      )}
+    </div>
     );
 };
 

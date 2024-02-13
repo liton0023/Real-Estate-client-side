@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import About from "../Pages/About";
+import CreateListing from "../Pages/CreateListing";
 import Home from "../Pages/Home";
 import Main from "../Pages/Main";
 import Profile from "../Pages/Profile";
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
                 element:
                     <Profile></Profile>
     
+            },
+            {
+                path:'create-listing',
+                element:<CreateListing></CreateListing>
             }
         ]
     }
