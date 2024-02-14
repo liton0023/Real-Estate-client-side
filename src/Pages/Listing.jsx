@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-    FaBath,
-    FaBed,
-    FaChair,
-    FaMapMarkerAlt,
-    FaParking,
-    FaShare
+  FaBath,
+  FaBed,
+  FaChair,
+  FaMapMarkerAlt,
+  FaParking,
+  FaShare
 } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -24,12 +24,14 @@ const Listing = () => {
     const [contact, setContact] = useState(false);
     const params = useParams();
     const { currentUser } = useSelector((state) => state.user);
+
+    // console.log(currentUser._id, listing.userRef)
   
     useEffect(() => {
       const fetchListing = async () => {
         try {
           setLoading(true);
-          const res = await fetch(`/api/listing/get/${params.listingId}`);
+          const res = await fetch(`/api/listing/get/${params.id}`);
           const data = await res.json();
           if (data.success === false) {
             setError(true);
@@ -45,7 +47,7 @@ const Listing = () => {
         }
       };
       fetchListing();
-    }, [params.listingId]);
+    }, [params.id]);
     return (
         <main>
         {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
@@ -58,7 +60,7 @@ const Listing = () => {
               {listing.imageUrls.map((url) => (
                 <SwiperSlide key={url}>
                   <div
-                    className='h-[550px]'
+                    className='h-[400px] w-full'
                     style={{
                       background: `url(${url}) center no-repeat`,
                       backgroundSize: 'cover',
@@ -140,7 +142,7 @@ const Listing = () => {
                   Contact landlord
                 </button>
               )}
-              {contact && <Contact listing={listing} />}
+              {contact && <Contact listing={listing}></Contact>}
             </div>
           </div>
         )}
