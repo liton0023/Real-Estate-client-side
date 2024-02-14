@@ -26,7 +26,7 @@ const Contact = ({listing}) => {
         {landlord && (
           <div className='flex flex-col gap-2'>
             <p>
-              Contact <span className='font-semibold'>{landlord.username}</span>{' '}
+              Contact <span className='font-semibold'>{landlord.email}</span>{' '}
               for{' '}
               <span className='font-semibold'>{listing.name}</span>
             </p>
@@ -41,7 +41,7 @@ const Contact = ({listing}) => {
             ></textarea>
   
             <Link
-            to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
+            to={`mailto:${landlord.email}? subject=Regarding ${listing.name}&body=${message}`}
             className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
             >
               Send Message          
