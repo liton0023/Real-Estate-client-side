@@ -10,7 +10,7 @@ const Home = () => {
     const [saleListings, setSaleListings] = useState([]);
     const [rentListings, setRentListings] = useState([]);
     SwiperCore.use([Navigation]);
-    console.log(offerListings);
+    // console.log(offerListings);
     useEffect(() => {
       const fetchOfferListings = async () => {
         try {
@@ -82,15 +82,6 @@ const Home = () => {
                 key={listing._id}
               ></div>
             </SwiperSlide>
-        //     <SwiperSlide key={url}>
-        //     <div
-        //       className='h-[400px] w-full'
-        //       style={{
-        //         background: `url(${url}) center no-repeat`,
-        //         backgroundSize: 'cover',
-        //       }}
-        //     ></div>
-        //   </SwiperSlide>
           ))}
       </Swiper>
 
