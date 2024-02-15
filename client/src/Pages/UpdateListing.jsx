@@ -1,8 +1,8 @@
 import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
 } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -35,7 +35,7 @@ export default function CreateListing() {
 
   useEffect(() => {
     const fetchListing = async () => {
-      const listingId = params.id;
+      const listingId = params.listingId;
       const res = await fetch(`/api/listing/get/${listingId}`);
       const data = await res.json();
       if (data.success === false) {
@@ -48,7 +48,7 @@ export default function CreateListing() {
     fetchListing();
   }, []);
 
-  const handleImageSubmit = () => {
+  const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -67,7 +67,7 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError('Image upload failed (2 mb max per image)',err);
+          setImageUploadError('Image upload failed (2 mb max per image)');
           setUploading(false);
         });
     } else {
@@ -148,7 +148,7 @@ export default function CreateListing() {
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.id}`, {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

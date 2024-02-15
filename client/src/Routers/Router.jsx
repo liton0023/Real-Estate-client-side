@@ -7,8 +7,7 @@ import Main from "../Pages/Main";
 import Profile from "../Pages/Profile";
 import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
-import SingIn from "../Pages/SingIn";
-import SingOut from "../Pages/SingOut";
+import SignIn from "../Pages/SingIn";
 import UpdateListing from "../Pages/UpdateListing";
 
 export const router = createBrowserRouter([
@@ -26,11 +25,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'signIn',
-                element:<SingIn></SingIn>
-            },
-            {
-                path:'singOut',
-                element:<SingOut></SingOut>,
+                element:<SignIn></SignIn>
             },
             {
                 path:'signUp',

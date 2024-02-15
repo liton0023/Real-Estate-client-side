@@ -1,8 +1,8 @@
 import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
 } from 'firebase/storage';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ export default function CreateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
-  const handleImageSubmit = () => {
+  const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -51,7 +51,7 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError('Image upload failed (2 mb max per image)',err);
+          setImageUploadError('Image upload failed (2 mb max per image)');
           setUploading(false);
         });
     } else {
