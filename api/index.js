@@ -10,14 +10,6 @@ import userRouter from './controllers/router/user.route.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
-
-// middleweres
-// app.use(cors({
-//   origin:[
-//     'https://real-estate-3dd13.web.app',
-//     'https://real-estate-3dd13.firebaseapp.com/'
-//   ]
-// }));
 app.use(express.json())
 app.use(cookieParser());
 
