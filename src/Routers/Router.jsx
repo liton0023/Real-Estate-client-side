@@ -5,6 +5,7 @@ import Home from "../Pages/Home";
 import Listing from "../Pages/Listing";
 import Main from "../Pages/Main";
 import Profile from "../Pages/Profile";
+import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
 import SingIn from "../Pages/SingIn";
 import SingOut from "../Pages/SingOut";
@@ -16,7 +17,7 @@ export const router = createBrowserRouter([
         element:<Main></Main>,
         children:[
             {
-                path:'home',
+                path:'/',
                 element:<Home></Home>
             },
             {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
             {
                 path:'update-listing/:id',
                 element: <UpdateListing></UpdateListing>
+            },
+            {
+                path:'search',
+                element:<Search></Search>
             }
         ]
     }
