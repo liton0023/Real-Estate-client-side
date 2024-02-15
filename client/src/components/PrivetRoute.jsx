@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivetRoute = () => {
     const { currentUser } = useSelector((state) => state.user);
-  return currentUser ? <Outlet /> : <Navigate to='/signin' />;
+  return currentUser ? <Outlet /> : <Navigate to='/signIn' />;
 };
 
 export default PrivetRoute;

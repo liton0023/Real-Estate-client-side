@@ -42,22 +42,28 @@ export const router = createBrowserRouter([
             },
             {
                 path:'profile',
-                element:
+                element:(
                     <Profile></Profile>
-    
+                )
             },
             {
                 path:'create-listing',
-                element:<CreateListing></CreateListing>
+                element:(
+                    <CreateListing></CreateListing>
+                )
+
             },
             {
                 path:'update-listing/:id',
-                element: <UpdateListing></UpdateListing>
+                element:(
+                    <UpdateListing></UpdateListing>
+                )
             },
             {
                 path:'search',
                 element:<Search></Search>
             }
         ]
-    }
+    },
+
 ])
