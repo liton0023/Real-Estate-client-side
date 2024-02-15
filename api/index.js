@@ -31,7 +31,7 @@ mongoose.connect(uri)
     console.log(err);
 })
 
-const _dirname = path.resolve();
+const __dirname = path.resolve();
 
 app.get("/", (req, res) => {
     res.send("boss in running");
@@ -46,11 +46,10 @@ app.get("/", (req, res) => {
   app.use('/api/auth', authRouter);
   app.use('/api/listing',listingRouter);
 
-
-  app.use(express.static(path.join(_dirname, '/client/dist')));
+  app.use(express.static(path.join(__dirname, '/client/dist')));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
   })
 
 
