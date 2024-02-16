@@ -34,7 +34,7 @@ mongoose.connect(uri)
 
 
 app.get("/", (req, res) => {
-    res.send("boss in running");
+    res.send("bos in running");
   });
   
   app.listen(port, () => {
