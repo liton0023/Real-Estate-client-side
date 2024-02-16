@@ -1,23 +1,24 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import path from 'path';
 import authRouter from './controllers/router/auth.route.js';
 import listingRouter from './controllers/router/listing.route.js';
 import userRouter from './controllers/router/user.route.js';
 
 dotenv.config();
 const app = express();
+const __dirname = path.resolve();
 const port = process.env.PORT || 3000;
 
 // middleweres
-app.use(cors({
-  origin:[
-    'https://real-estate-3dd13.web.app',
-    'https://real-estate-3dd13.firebaseapp.com/'
-  ]
-}));
+// app.use(cors({
+//   origin:[
+//     'https://real-estate-3dd13.web.app',
+//     'https://real-estate-3dd13.firebaseapp.com/'
+//   ]
+// }));
 app.use(express.json())
 app.use(cookieParser());
 
@@ -44,7 +45,11 @@ app.get("/", (req, res) => {
   app.use('/api/auth', authRouter);
   app.use('/api/listing',listingRouter);
 
+  app.use(express.static(path.join(__dirname, '/client/dist')));
 
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  })
 
 
   app.use((err, req, res, next) => {
