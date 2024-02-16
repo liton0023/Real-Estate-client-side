@@ -6,7 +6,7 @@ import {
 } from 'firebase/storage';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { app } from '../../firebase';
 import {
   deleteUserFailure,
@@ -28,6 +28,7 @@ export default function Profile() {
   const [showListingsError, setShowListingsError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
+  const navigate= useNavigate();
 
   // firebase storage
   // allow read;
@@ -105,6 +106,7 @@ export default function Profile() {
         return;
       }
       dispatch(deleteUserSuccess(data));
+      navigate('/signIn')
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -120,6 +122,7 @@ export default function Profile() {
         return;
       }
       dispatch(deleteUserSuccess(data));
+      navigate('/signIn')
     } catch (error) {
       dispatch(deleteUserFailure(data.message));
     }

@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
                 element:<Home></Home>
             },
             {
-             path:'listing/:id',
+             path:'listing/:listingId',
              element:<Listing></Listing>
             },
             {
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
 
             },
             {
-                path:'update-listing/:id',
+                path:'update-listing/:listingId',
                 element:(
                     <UpdateListing></UpdateListing>
                 )
