@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
   });
   
   app.listen(port, () => {
-    console.log(` Boss is running on ${port}`);
+    console.log(` Bos is running on ${port}`);
   });
 
   app.use('/api/user', userRouter);
