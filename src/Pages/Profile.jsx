@@ -74,8 +74,9 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`http://localhost:3000/api/user/update/${currentUser._id}`, {
         method: 'POST',
+        credentials:'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -97,8 +98,9 @@ export default function Profile() {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`http://localhost:3000/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
+        credentials:'include'
       });
       const data = await res.json();
       if (data.success === false) {
@@ -106,6 +108,7 @@ export default function Profile() {
         return;
       }
       dispatch(deleteUserSuccess(data));
+      navigate('/signin')
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -114,7 +117,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch('http://localhost:3000/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -130,12 +133,14 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`http://localhost:3000/api/user/listings/${currentUser._id}`,{credentials:'include'});
       const data = await res.json();
+      console.log(data)
       if (data.success === false) {
         setShowListingsError(true);
         return;
       }
+      console.log(data)
 
       setUserListings(data);
     } catch (error) {
@@ -145,8 +150,9 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await fetch(`http://localhost:3000/api/listing/delete/${listingId}`, {
         method: 'DELETE',
+        credentials:'include'
       });
       const data = await res.json();
       if (data.success === false) {
@@ -174,7 +180,7 @@ export default function Profile() {
         />
         <img
           onClick={() => fileRef.current.click()}
-          src={formData.avatar || currentUser.avatar}
+          src={formData?.avatar || currentUser?.avatar}
           alt='profile'
           className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
         />
@@ -194,7 +200,7 @@ export default function Profile() {
         <input
           type='text'
           placeholder='username'
-          defaultValue={currentUser.username}
+          defaultValue={currentUser?.username}
           id='username'
           className='border p-3 rounded-lg'
           onChange={handleChange}
@@ -203,7 +209,7 @@ export default function Profile() {
           type='email'
           placeholder='email'
           id='email'
-          defaultValue={currentUser.email}
+          defaultValue={currentUser?.email}
           className='border p-3 rounded-lg'
           onChange={handleChange}
         />
